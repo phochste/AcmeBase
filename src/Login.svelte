@@ -1,6 +1,5 @@
 <script>
     import * as N3 from 'n3';
-    export let appName = "3123ty123";
     export let profile = undefined;
 
     let webId;
@@ -10,25 +9,15 @@
     const onConnect = (ev) => { showConnect = false };
     const cancelConnect = (ev) => { showConnect = true };
 
-    if (window.location.hash) {
-        localStorage.setItem(appName, JSON.stringify( {
-            hash : window.location.hash
-        }));
-    }
-
     solidClientAuthentication.handleIncomingRedirect({ restorePreviousSession: true })
                                        .then( async info => {
         webId = info.webId;
 
         profile = await fetchUserProfile(webId);
-
-        // Restore hash...
-        let formParam = JSON.parse(localStorage.getItem(appName));
-        window.location.hash = formParam.hash;
     });
 
     function handleLogin() {
-        console.log(`Login to : ${issuer}`);
+        console.log(`Login to : ${issuer} redirect : ${window.location.href}`);
         solidClientAuthentication.login({
             oidcIssuer: issuer,
             redirectUrl: window.location.href,

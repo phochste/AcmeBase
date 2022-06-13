@@ -8,12 +8,7 @@ const Dotenv = require('dotenv-webpack');
 
 module.exports = {
 	entry: {
-		'build/bundle': ['./src/main.js'] ,
-		'build/editor.worker': 'monaco-editor/esm/vs/editor/editor.worker.js',
-		'build/json.worker': 'monaco-editor/esm/vs/language/json/json.worker',
-		'build/css.worker': 'monaco-editor/esm/vs/language/css/css.worker',
-		'build/html.worker': 'monaco-editor/esm/vs/language/html/html.worker',
-		'build/ts.worker': 'monaco-editor/esm/vs/language/typescript/ts.worker'
+		'build/bundle': ['./src/main.js'] 
 	},
 	resolve: {
 		alias: {
@@ -22,8 +17,7 @@ module.exports = {
 		extensions: ['.mjs', '.js', '.svelte'],
 		mainFields: ['svelte', 'browser', 'module', 'main'],
 		fallback: {
-			"Buffer": require.resolve('buffer/'),
-			"path": false
+			"Buffer": require.resolve('buffer/')
 		}
 	},
 	output: {
@@ -59,10 +53,6 @@ module.exports = {
 				resolve: {
 					fullySpecified: false
 				}
-			},
-			{
-				test: /\.ttf$/,
-				use: ['file-loader']
 			}
 		]
 	},
