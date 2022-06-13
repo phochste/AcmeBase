@@ -1,10 +1,16 @@
-# SolidEditor
+# AcmeBase
 
-A Microsoft [Monaco](https://microsoft.github.io/monaco-editor/index.html) based editor
-for text files on a Solid pod
+A base implementation of a Solid App with login using svelte
 
 # Usage
 
-<img src=https://phochste.github.io/SolidEditor/images/demo.png>
+```
+npx degit phochste/AcmeBase my-solid-app
 
-{BASE_URL_OF_APP}#{URL_YOU_WANT_TO_EDIT}
+cd my-svelte-project
+# to use TypeScript run:
+# node scripts/setupTypeScript.js
+
+npm install
+npm run dev
+```
