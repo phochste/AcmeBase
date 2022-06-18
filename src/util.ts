@@ -1,5 +1,15 @@
-import { fetch } from '@inrupt/solid-client-authn-browser';
+import { fetch , getDefaultSession } from '@inrupt/solid-client-authn-browser';
 import * as N3 from 'n3';
+
+/* 
+ * See: https://docs.inrupt.com/developer-tools/javascript/client-libraries/tutorial/authenticate-browser/
+ * for documentation on Inrupt Solid Authn API
+*/
+
+
+export function isLoggedIn() : boolean {
+    return getDefaultSession().info.isLoggedIn;
+}
 
 export async function readSolidDocument(url: string) {
     try {
