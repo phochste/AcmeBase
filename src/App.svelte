@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Login from './Login.svelte';
 	import Logout from './Logout.svelte';
+	import Hello from './Hello.svelte';
 
 	export let name: string;
 	let profile: any;
@@ -20,3 +21,5 @@
 </nav>
 
 <Login bind:profile={profile}/>
+
+<Hello {profile}/>

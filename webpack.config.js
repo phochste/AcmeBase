@@ -15,7 +15,7 @@ module.exports = {
 		alias: {
 			svelte: path.dirname(require.resolve('svelte/package.json'))
 		},
-		extensions: ['.mjs', '.js', '.svelte'],
+		extensions: ['.tsx', '.ts' , '.mjs' , '.js', '.svelte'],
 		mainFields: ['svelte', 'browser', 'module', 'main'],
 		fallback: {
 			"Buffer": require.resolve('buffer/')
@@ -40,6 +40,12 @@ module.exports = {
 						emitCss: prod,
 						hotReload: !prod
 					}
+				}
+			},
+			{
+				test : /\.ts$/,
+				use: {
+					loader: 'ts-loader'
 				}
 			},
 			{
