@@ -1,9 +1,9 @@
-<script>
+<script lang="ts">
 	import Login from './Login.svelte';
 	import Logout from './Logout.svelte';
 
-	export let name;
-	let profile;
+	export let name: string;
+	let profile: any;
 </script>
 
 <nav class="navbar navbar-default">

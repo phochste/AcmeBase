@@ -1,24 +1,34 @@
-<script>
+<script context="module" lang="ts">
+    export type ProfileType = {
+        webId: string,
+        givenName: string | undefined,
+        familyName: string | undefined,
+        name: string | undefined,
+        image: string | undefined
+    };
+</script>
+<script lang="ts">
+    import { handleIncomingRedirect, login, fetch } from '@inrupt/solid-client-authn-browser';
     import * as N3 from 'n3';
-    export let profile = undefined;
 
-    let webId;
-    let issuer;
-    let showConnect = true;
+    export let profile: any = undefined;
+
+    let webId : string;
+    let issuer : string;
+    let showConnect : boolean = true;
 
     const onConnect = (ev) => { showConnect = false };
     const cancelConnect = (ev) => { showConnect = true };
 
-    solidClientAuthentication.handleIncomingRedirect({ restorePreviousSession: true })
-                                       .then( async info => {
+    handleIncomingRedirect({ restorePreviousSession: true })
+        .then( async info => {
         webId = info.webId;
-
         profile = await fetchUserProfile(webId);
     });
 
     function handleLogin() {
         console.log(`Login to : ${issuer} redirect : ${window.location.href}`);
-        solidClientAuthentication.login({
+        login({
             oidcIssuer: issuer,
             redirectUrl: window.location.href,
             clientName: "FormViewer"
@@ -26,9 +36,9 @@
     }
 
     // From https://github.com/ewingson/nox
-    async function readSolidDocument(url) {
+    async function readSolidDocument(url: string) {
         try {
-            const response = await solidClientAuthentication.fetch(url, { headers: { Accept: 'text/turtle' } });
+            const response = await fetch(url, { headers: { Accept: 'text/turtle' } });
 
             if (!isSuccessfulStatusCode(response.status))
                 return null;
@@ -42,11 +52,11 @@
         }
     }
 
-    function isSuccessfulStatusCode(statusCode) {
+    function isSuccessfulStatusCode(statusCode: number) : boolean {
         return Math.floor(statusCode / 100) === 2;
     }
 
-    async function fetchUserProfile(webId) {
+    async function fetchUserProfile(webId: string) : Promise<ProfileType> {
         const profileQuads = await readSolidDocument(webId);
         const givenNameQuad 
               = profileQuads.find(quad => quad.predicate.value === 'http://xmlns.com/foaf/0.1/givenName');

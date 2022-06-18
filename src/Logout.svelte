@@ -1,9 +1,10 @@
-<script>
-    export let profile;
+<script lang="ts">
+    import { logout } from '@inrupt/solid-client-authn-browser';
+    export let profile: any;
 
     function handleLogout() {
         console.log(`Logout : ${profile.webId}`);
-        solidClientAuthentication.logout();
+        logout();
         profile = undefined;
     }
 </script>
