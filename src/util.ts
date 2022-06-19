@@ -6,7 +6,6 @@ import * as N3 from 'n3';
  * for documentation on Inrupt Solid Authn API
 */
 
-
 export function isLoggedIn() : boolean {
     return getDefaultSession().info.isLoggedIn;
 }

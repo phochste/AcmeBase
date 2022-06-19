@@ -1,17 +1,16 @@
 <script lang="ts">
     import type { ProfileType } from './util';
     import { isLoggedIn } from './util';
-    import { fetch } from '@inrupt/solid-client-authn-browser';
+    import { fetch , onSessionRestore } from '@inrupt/solid-client-authn-browser';
     import { getPodUrlAll } from "@inrupt/solid-client";
-    import { login_store } from './login_store';
 
     export let profile : ProfileType;
 
-    let resource : string;
+    let resource : string = window.location.href;
 
-    login_store.subscribe( val => {
-        resource = val['url'];
-    });
+    onSessionRestore( (url) => {
+        resource = url;
+    })
 </script>
 
 {#if isLoggedIn() && profile }
