@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { handleIncomingRedirect, login } from '@inrupt/solid-client-authn-browser';
+    import { onMount } from 'svelte';
+    import { handleIncomingRedirect, login, onSessionRestore, getDefaultSession, onLogin, onLogout } from '@inrupt/solid-client-authn-browser';
     import { fetchUserProfile } from './util';
     import type { ProfileType } from './util';
 
@@ -12,12 +13,6 @@
     const onConnect = (ev) => { showConnect = false };
     const cancelConnect = (ev) => { showConnect = true };
 
-    handleIncomingRedirect({ restorePreviousSession: true })
-        .then( async info => {
-        webId = info.webId;
-        profile = await fetchUserProfile(webId);
-    });
-
     function handleLogin() {
         console.log(`Login to : ${issuer} redirect : ${window.location.href}`);
         login({
@@ -26,6 +21,26 @@
             clientName: "FormViewer"
         });
     }
+
+    onLogin( () => sessionChanged() );
+    onLogout( () => sessionChanged() );
+    onSessionRestore( (url) => sessionChanged(url));
+
+    async function sessionChanged(url?: string) {
+      let session = getDefaultSession();
+      webId = session.info.webId;
+      profile = await fetchUserProfile(webId); 
+      if (url) {
+        window.history.pushState({},undefined,url);
+      }
+    }
+
+    onMount( () => {
+      handleIncomingRedirect({ 
+          restorePreviousSession: true,
+          url: window.location.href
+      });
+    });
 </script>
 
 {#if ! profile}
