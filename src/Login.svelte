@@ -23,7 +23,6 @@
     }
 
     onLogin( () => sessionChanged() );
-    onLogout( () => sessionChanged() );
     onSessionRestore( (url) => sessionChanged(url));
 
     async function sessionChanged(url?: string) {
