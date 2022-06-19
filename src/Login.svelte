@@ -3,6 +3,7 @@
     import { handleIncomingRedirect, login, onSessionRestore, getDefaultSession, onLogin, onLogout } from '@inrupt/solid-client-authn-browser';
     import { fetchUserProfile } from './util';
     import type { ProfileType } from './util';
+    import { login_store } from './login_store';
 
     export let profile :ProfileType;
 
@@ -31,6 +32,11 @@
       profile = await fetchUserProfile(webId); 
       if (url) {
         window.history.pushState({},undefined,url);
+        login_store.update( () => {
+          const queryString = url.replace(/.*\?/,'');
+          const urlParams = new URLSearchParams(queryString);
+          return { url : url , params: urlParams } ;
+        });
       }
     }
 
