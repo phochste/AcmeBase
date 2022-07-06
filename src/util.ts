@@ -1,9 +1,12 @@
 import { getDefaultSession } from '@inrupt/solid-client-authn-browser';
 import { getSolidDataset, 
+         getStringByLocaleAll, 
+         getStringEnglish, 
          getStringNoLocale, 
          getThing,
          getUrl, 
-         type SolidDataset 
+         type SolidDataset , 
+         type Thing
 } from '@inrupt/solid-client';
 import { FOAF } from '@inrupt/vocab-common-rdf';
 
@@ -25,12 +28,34 @@ export type ProfileType = {
     data: SolidDataset
 };
 
+export function getString(thing: Thing, property: string) : string | null {
+    let value = getStringNoLocale(thing,property);
+
+    if (value) {
+        return value;
+    }
+
+    value = getStringEnglish(thing, property);
+
+    if (value) {
+        return value;
+    }
+
+    let map = getStringByLocaleAll(thing, property);
+
+    if (map) {
+        return map.values().next().value[0];
+    }
+    
+    return null;
+}
+
 export async function fetchUserProfile(webId: string) : Promise<ProfileType> {
     const dataset      = await getSolidDataset(webId);
     const me           = getThing(dataset,webId);
-    const givenName    = getStringNoLocale(me,FOAF.givenName);
-    const familyName   = getStringNoLocale(me,FOAF.familyName);
-    const name         = getStringNoLocale(me,FOAF.name);
+    const givenName    = getString(me,FOAF.givenName);
+    const familyName   = getString(me,FOAF.familyName);
+    const name         = getString(me,FOAF.name);
     const img          = getUrl(me,FOAF.img);
 
     return {
