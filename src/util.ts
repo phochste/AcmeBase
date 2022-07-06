@@ -25,7 +25,7 @@ export type ProfileType = {
     familyName: string | null,
     name: string | null,
     img: string | null,
-    data: SolidDataset
+    data?: SolidDataset
 };
 
 export function getString(thing: Thing, property: string) : string | null {
