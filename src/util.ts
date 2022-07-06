@@ -18,10 +18,10 @@ export function isLoggedIn() : boolean {
 
 export type ProfileType = {
     webId: string,
-    givenName: string | undefined,
-    familyName: string | undefined,
-    name: string | undefined,
-    img: string | undefined,
+    givenName: string | null,
+    familyName: string | null,
+    name: string | null,
+    img: string | null,
     data: SolidDataset
 };
 
