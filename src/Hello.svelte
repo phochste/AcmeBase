@@ -14,7 +14,7 @@
 </script>
 
 {#if isLoggedIn() && profile }
-    <h1>Hello {profile.givenName ? profile.givenName : "Anonymous 😉"} !</h1>
+    <h1>Hello {profile.givenName ? profile.givenName : profile.webId} !</h1>
     <i>{resource}</i>
     <h3>Overview of your pods:</h3>
     

@@ -43,7 +43,7 @@ export function getString(thing: Thing, property: string) : string | null {
 
     let map = getStringByLocaleAll(thing, property);
 
-    if (map) {
+    if (map && map.values().next().value) {
         return map.values().next().value[0];
     }
     
